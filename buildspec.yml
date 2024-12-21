@@ -13,8 +13,9 @@ phases:
       - INSTANCE_ID="i-08d5bd917880154ac"  # Replace with your EC2 instance ID
       - AMI_NAME="MyApp-AMI-$(date +%Y-%m-%d-%H-%M-%S)"
       - echo "Creating AMI with name $AMI_NAME from instance $INSTANCE_ID"
-      - AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name $AMI_NAME --description "CI/CD generated AMI" --no-reboot --output text --query ImageId)
+      - AMI_ID=$(aws ec2 create-image --instance-id $INSTANCE_ID --name "$AMI_NAME" --description "CI/CD generated AMI" --no-reboot --output text --query ImageId)
       - echo "AMI created with ID: $AMI_ID"
+      - echo "Adding tags to the AMI..."
       - aws ec2 create-tags --resources $AMI_ID --tags Key=Name,Value=MyAppGeneratedAMI
 artifacts:
   files:
